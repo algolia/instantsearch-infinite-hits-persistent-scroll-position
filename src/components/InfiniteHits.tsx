@@ -45,6 +45,18 @@ export function InfiniteHits(props: InfiniteHitsProps) {
   const [selectedHit, setSelectedHit] = useState<Hit | null>(null);
   const [clickedHits, setClickedHits] = useState<string[]>([]);
 
+  useEffect(() => {
+    // scroll to clicked hit
+    if (clickedHits[0]) {
+      const clickedHit = document.querySelector(
+        `.ais-InfiniteHits-item__hit.clicked`
+      );
+      if (clickedHit) {
+        clickedHit.scrollIntoView();
+      }
+    }
+  }, []);
+
   // Load the clicked hits from localStorage
   useEffect(() => {
     const clickedHitString = localStorage.getItem("clickedHits");
@@ -91,6 +103,7 @@ export function InfiniteHits(props: InfiniteHitsProps) {
             <li
               key={hit.objectID}
               className={`ais-InfiniteHits-item ${isClicked ? "clicked" : ""}`}
+              id={hit.objectID}
             >
               <CustomHit hit={hit} onHitClick={openModal} />
             </li>

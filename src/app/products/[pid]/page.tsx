@@ -1,6 +1,7 @@
 "use client";
 
 import algoliasearch from "algoliasearch";
+import Link from "next/link";
 
 type PageProps = {
   params: {
@@ -43,12 +44,7 @@ export default async function Page({ params }: PageProps) {
       {data && (
         <section>
           <header className="header">
-            <button
-              onClick={() => {
-                window.history.back();
-              }}
-              className="back-button"
-            >
+            <Link href={`/#${params.pid}`} className="back-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -68,7 +64,7 @@ export default async function Page({ params }: PageProps) {
                 />
               </svg>
               <span>Back</span>
-            </button>
+            </Link>
             <h1>{name}</h1>
           </header>
 
