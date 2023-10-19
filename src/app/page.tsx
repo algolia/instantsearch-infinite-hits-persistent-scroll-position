@@ -1,7 +1,6 @@
 'use client';
 
 import { InfiniteHits } from '@/components/InfiniteHits';
-import algoliasearch from 'algoliasearch/lite';
 import {
   Configure,
   InstantSearch,
@@ -11,25 +10,12 @@ import {
 
 import './globals.css';
 import { Panel } from '@/components/Panel';
-import { useEffect } from 'react';
-
-const searchClient = algoliasearch(
-  'latency',
-  '6be0576ff61c053d5f9a3225e2a90f76'
-);
+import { INDEX_NAME, SCROLL_POSITION_KEY } from '@/constants';
+import { searchClientLite } from '@/searchClient';
+import { useRestorePosition } from '@/hooks';
 
 export default function Home() {
-  useEffect(() => {
-    const scrollPosition = sessionStorage.getItem('ALGOLIA__scrollPosition');
-    console.log({ scrollPosition });
-
-    if (scrollPosition) {
-      setTimeout(() => {
-        window.scrollTo(0, parseInt(scrollPosition));
-        sessionStorage.removeItem('ALGOLIA__scrollPosition');
-      }, 0);
-    }
-  }, []);
+  useRestorePosition(SCROLL_POSITION_KEY);
 
   return (
     <div>
@@ -46,7 +32,7 @@ export default function Home() {
       </header>
 
       <div className="container">
-        <InstantSearch searchClient={searchClient} indexName="instant_search">
+        <InstantSearch searchClient={searchClientLite} indexName={INDEX_NAME}>
           <Configure hitsPerPage={10} />
           <div className="search-panel">
             <div className="search-panel__filters">

@@ -5,51 +5,15 @@ import type { Hit } from 'instantsearch.js';
 
 import type { InfiniteHitsProps } from 'react-instantsearch';
 import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache';
+import { SCROLL_POSITION_KEY } from '@/constants';
+import { ProductHit } from '@/app/types';
+import type { InfiniteHitsCache } from 'instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits';
 
-type HitProps = {
-  hit: Hit;
-  onHitClick: (hit: Hit) => void;
-};
+const sessionStorageCache =
+  createInfiniteHitsSessionStorageCache() as unknown as InfiniteHitsCache<ProductHit>;
 
-const CustomHit = ({ hit, onHitClick }: HitProps) => {
-  return (
-    <div
-      className={`ais-InfiniteHits-item__hit`}
-      onClick={() => onHitClick(hit)}
-    >
-      <Link
-        href={{
-          pathname: `/products/${hit.objectID}`,
-        }}
-        onClick={() => {
-          sessionStorage.setItem(
-            'ALGOLIA__scrollPosition',
-            String(window.scrollY)
-          );
-        }}
-      >
-        <span className="img-container">
-          <img src={hit.image} alt={hit.name} />
-        </span>
-        <span>
-          <h1>
-            <Highlight attribute="name" hit={hit} />
-          </h1>
-          <p>
-            <Highlight attribute="description" hit={hit} />
-          </p>
-        </span>
-      </Link>
-    </div>
-  );
-};
-
-export default CustomHit;
-
-const sessionStorageCache = createInfiniteHitsSessionStorageCache();
-
-export function InfiniteHits(props: InfiniteHitsProps) {
-  const { hits, isLastPage, showMore } = useInfiniteHits({
+export function InfiniteHits(props: InfiniteHitsProps<ProductHit>) {
+  const { hits, isLastPage, showMore } = useInfiniteHits<ProductHit>({
     ...props,
     cache: sessionStorageCache,
   });
@@ -64,16 +28,6 @@ export function InfiniteHits(props: InfiniteHitsProps) {
       setClickedHits(JSON.parse(clickedHitString));
     }
   }, []);
-
-  const openModal = (hit: Hit) => {
-    setSelectedHit(hit);
-    if (!clickedHits.includes(hit.objectID)) {
-      const updatedClickedHits = [hit.objectID];
-      setClickedHits(updatedClickedHits);
-      // Save the updated clicked hits to localStorage
-      localStorage.setItem('clickedHits', JSON.stringify(updatedClickedHits));
-    }
-  };
 
   useEffect(() => {
     if (sentinelRef.current !== null) {
@@ -105,7 +59,46 @@ export function InfiniteHits(props: InfiniteHitsProps) {
               className={`ais-InfiniteHits-item ${isClicked ? 'clicked' : ''}`}
               id={hit.objectID}
             >
-              <CustomHit hit={hit} onHitClick={openModal} />
+              <div
+                className="ais-InfiniteHits-item__hit"
+                onClick={() => {
+                  const updatedClickedHits = [hit.objectID];
+
+                  setSelectedHit(hit);
+                  if (!clickedHits.includes(hit.objectID)) {
+                    setClickedHits(updatedClickedHits);
+                    // Save the updated clicked hits to localStorage
+                    localStorage.setItem(
+                      'clickedHits',
+                      JSON.stringify(updatedClickedHits)
+                    );
+                  }
+                }}
+              >
+                <Link
+                  href={{
+                    pathname: `/products/${hit.objectID}`,
+                  }}
+                  onClick={() => {
+                    sessionStorage.setItem(
+                      SCROLL_POSITION_KEY,
+                      String(window.scrollY)
+                    );
+                  }}
+                >
+                  <span className="img-container">
+                    <img src={hit.image} alt={hit.name} />
+                  </span>
+                  <span>
+                    <h1>
+                      <Highlight attribute="name" hit={hit} />
+                    </h1>
+                    <p>
+                      <Highlight attribute="description" hit={hit} />
+                    </p>
+                  </span>
+                </Link>
+              </div>
             </li>
           );
         })}

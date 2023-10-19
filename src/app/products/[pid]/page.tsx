@@ -1,7 +1,8 @@
 'use client';
 
-import algoliasearch from 'algoliasearch';
-import Link from 'next/link';
+import { ProductHit } from '@/app/types';
+import { INDEX_NAME } from '@/constants';
+import { searchClient } from '@/searchClient';
 
 type PageProps = {
   params: {
@@ -9,19 +10,10 @@ type PageProps = {
   };
 };
 
-type ProductData = {
-  name: string;
-  description: string;
-  brand: string;
-  categories: string[];
-  image: string;
-};
-
 async function getData(objectID: string) {
-  const client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
-  const index = client.initIndex('instant_search');
+  const index = searchClient.initIndex(INDEX_NAME);
 
-  const res = (await index.getObject(objectID)) as ProductData;
+  const res = await index.getObject<ProductHit>(objectID);
 
   if (!res) {
     throw new Error('Failed to fetch data');
@@ -31,7 +23,7 @@ async function getData(objectID: string) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const data: ProductData | null = await getData(params.pid);
+  const data: ProductHit | null = await getData(params.pid);
 
   const { name, description, brand, categories, image } = data;
 
