@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import algoliasearch from "algoliasearch";
-import Link from "next/link";
+import algoliasearch from 'algoliasearch';
+import Link from 'next/link';
 
 type PageProps = {
   params: {
@@ -18,13 +18,13 @@ type ProductData = {
 };
 
 async function getData(objectID: string) {
-  const client = algoliasearch("latency", "6be0576ff61c053d5f9a3225e2a90f76");
-  const index = client.initIndex("instant_search");
+  const client = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+  const index = client.initIndex('instant_search');
 
   const res = (await index.getObject(objectID)) as ProductData;
 
   if (!res) {
-    throw new Error("Failed to fetch data");
+    throw new Error('Failed to fetch data');
   }
 
   return res;
@@ -44,7 +44,12 @@ export default async function Page({ params }: PageProps) {
       {data && (
         <section>
           <header className="header">
-            <Link href={`/#${params.pid}`} className="back-button">
+            <button
+              className="back-button"
+              onClick={() => {
+                history.back();
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -52,19 +57,19 @@ export default async function Page({ params }: PageProps) {
                 stroke-width="1.5"
                 stroke="currentColor"
                 style={{
-                  width: "1.5rem",
-                  height: "1.5rem",
-                  marginRight: "0.5rem",
+                  width: '1.5rem',
+                  height: '1.5rem',
+                  marginRight: '0.5rem',
                 }}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
                 />
               </svg>
               <span>Back</span>
-            </Link>
+            </button>
             <h1>{name}</h1>
           </header>
 
@@ -77,7 +82,7 @@ export default async function Page({ params }: PageProps) {
                 <b>Brand</b>: {brand}
               </p>
               <p>
-                <b>Categories</b>: {categories.map((cat) => cat).join(", ")}
+                <b>Categories</b>: {categories.map((cat) => cat).join(', ')}
               </p>
             </div>
           </div>

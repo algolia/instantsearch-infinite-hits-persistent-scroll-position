@@ -21,6 +21,12 @@ const CustomHit = ({ hit, onHitClick }: HitProps) => {
         href={{
           pathname: `/products/${hit.objectID}`,
         }}
+        onClick={() => {
+          sessionStorage.setItem(
+            'ALGOLIA__scrollPosition',
+            String(window.scrollY)
+          );
+        }}
       >
         <span className="img-container">
           <img src={hit.image} alt={hit.name} />

@@ -1,23 +1,36 @@
-"use client";
+'use client';
 
-import { InfiniteHits } from "@/components/InfiniteHits";
-import algoliasearch from "algoliasearch/lite";
+import { InfiniteHits } from '@/components/InfiniteHits';
+import algoliasearch from 'algoliasearch/lite';
 import {
   Configure,
   InstantSearch,
   RefinementList,
   SearchBox,
-} from "react-instantsearch";
+} from 'react-instantsearch';
 
-import "./globals.css";
-import { Panel } from "@/components/Panel";
+import './globals.css';
+import { Panel } from '@/components/Panel';
+import { useEffect } from 'react';
 
 const searchClient = algoliasearch(
-  "latency",
-  "6be0576ff61c053d5f9a3225e2a90f76"
+  'latency',
+  '6be0576ff61c053d5f9a3225e2a90f76'
 );
 
 export default function Home() {
+  useEffect(() => {
+    const scrollPosition = sessionStorage.getItem('ALGOLIA__scrollPosition');
+    console.log({ scrollPosition });
+
+    if (scrollPosition) {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(scrollPosition));
+        sessionStorage.removeItem('ALGOLIA__scrollPosition');
+      }, 0);
+    }
+  }, []);
+
   return (
     <div>
       <header className="header">
@@ -25,7 +38,7 @@ export default function Home() {
           <a href="/">react-instantsearch-app</a>
         </h1>
         <p className="header-subtitle">
-          using{" "}
+          using{' '}
           <a href="https://github.com/algolia/instantsearch/tree/master/packages/react-instantsearch">
             React InstantSearch with Infinite hits, auto show more,
           </a>
