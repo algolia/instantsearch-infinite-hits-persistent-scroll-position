@@ -1,9 +1,10 @@
-import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { Highlight, Snippet, useInfiniteHits } from "react-instantsearch";
-import type { Hit } from "instantsearch.js";
+import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react';
+import { Highlight, useInfiniteHits } from 'react-instantsearch';
+import type { Hit } from 'instantsearch.js';
 
-import type { InfiniteHitsProps } from "react-instantsearch";
+import type { InfiniteHitsProps } from 'react-instantsearch';
+import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache';
 
 type HitProps = {
   hit: Hit;
@@ -39,27 +40,20 @@ const CustomHit = ({ hit, onHitClick }: HitProps) => {
 
 export default CustomHit;
 
+const sessionStorageCache = createInfiniteHitsSessionStorageCache();
+
 export function InfiniteHits(props: InfiniteHitsProps) {
-  const { hits, isLastPage, showMore } = useInfiniteHits(props);
+  const { hits, isLastPage, showMore } = useInfiniteHits({
+    ...props,
+    cache: sessionStorageCache,
+  });
   const sentinelRef = useRef(null);
   const [selectedHit, setSelectedHit] = useState<Hit | null>(null);
   const [clickedHits, setClickedHits] = useState<string[]>([]);
 
-  useEffect(() => {
-    // scroll to clicked hit
-    if (clickedHits[0]) {
-      const clickedHit = document.querySelector(
-        `.ais-InfiniteHits-item__hit.clicked`
-      );
-      if (clickedHit) {
-        clickedHit.scrollIntoView();
-      }
-    }
-  }, []);
-
   // Load the clicked hits from localStorage
   useEffect(() => {
-    const clickedHitString = localStorage.getItem("clickedHits");
+    const clickedHitString = localStorage.getItem('clickedHits');
     if (clickedHitString) {
       setClickedHits(JSON.parse(clickedHitString));
     }
@@ -71,7 +65,7 @@ export function InfiniteHits(props: InfiniteHitsProps) {
       const updatedClickedHits = [hit.objectID];
       setClickedHits(updatedClickedHits);
       // Save the updated clicked hits to localStorage
-      localStorage.setItem("clickedHits", JSON.stringify(updatedClickedHits));
+      localStorage.setItem('clickedHits', JSON.stringify(updatedClickedHits));
     }
   };
 
@@ -102,7 +96,7 @@ export function InfiniteHits(props: InfiniteHitsProps) {
           return (
             <li
               key={hit.objectID}
-              className={`ais-InfiniteHits-item ${isClicked ? "clicked" : ""}`}
+              className={`ais-InfiniteHits-item ${isClicked ? 'clicked' : ''}`}
               id={hit.objectID}
             >
               <CustomHit hit={hit} onHitClick={openModal} />
