@@ -16,7 +16,11 @@ const CustomHit = ({ hit, onHitClick }: HitProps) => {
       className={`ais-InfiniteHits-item__hit`}
       onClick={() => onHitClick(hit)}
     >
-      <Link href={`/products/${hit.objectID}`}>
+      <Link
+        href={{
+          pathname: `/products/${hit.objectID}`,
+        }}
+      >
         <span className="img-container">
           <img src={hit.image} alt={hit.name} />
         </span>
@@ -52,7 +56,7 @@ export function InfiniteHits(props: InfiniteHitsProps) {
   const openModal = (hit: Hit) => {
     setSelectedHit(hit);
     if (!clickedHits.includes(hit.objectID)) {
-      const updatedClickedHits = [...clickedHits, hit.objectID];
+      const updatedClickedHits = [hit.objectID];
       setClickedHits(updatedClickedHits);
       // Save the updated clicked hits to localStorage
       localStorage.setItem("clickedHits", JSON.stringify(updatedClickedHits));
