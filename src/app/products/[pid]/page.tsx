@@ -77,8 +77,12 @@ export default async function Page({ params }: PageProps) {
 
             <div>
               <p>{description}</p>
-              <p>Brand: {brand}</p>
-              <p>Categories: {categories}</p>
+              <p>
+                <b>Brand</b>: {brand}
+              </p>
+              <p>
+                <b>Categories</b>: {categories.map((cat) => cat).join(", ")}
+              </p>
             </div>
           </div>
         </section>
