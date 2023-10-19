@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { Highlight, useInfiniteHits } from 'react-instantsearch';
-import type { Hit } from 'instantsearch.js';
 
 import type { InfiniteHitsProps } from 'react-instantsearch';
 import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache';
-import { SCROLL_POSITION_KEY } from '@/constants';
+import { CLICKED_HIT_KEY, SCROLL_POSITION_KEY } from '@/constants';
 import { ProductHit } from '@/app/types';
 import type { InfiniteHitsCache } from 'instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits';
 
@@ -18,14 +17,13 @@ export function InfiniteHits(props: InfiniteHitsProps<ProductHit>) {
     cache: sessionStorageCache,
   });
   const sentinelRef = useRef(null);
-  const [selectedHit, setSelectedHit] = useState<Hit | null>(null);
-  const [clickedHits, setClickedHits] = useState<string[]>([]);
+  const [clickedObjectID, setClickedObjectID] = useState<string | null>(null);
 
   // Load the clicked hits from localStorage
   useEffect(() => {
-    const clickedHitString = localStorage.getItem('clickedHits');
+    const clickedHitString = localStorage.getItem(CLICKED_HIT_KEY);
     if (clickedHitString) {
-      setClickedHits(JSON.parse(clickedHitString));
+      setClickedObjectID(JSON.parse(clickedHitString));
     }
   }, []);
 
@@ -51,7 +49,7 @@ export function InfiniteHits(props: InfiniteHitsProps<ProductHit>) {
     <div className="ais-InfiniteHits">
       <ul className="ais-InfiniteHits-list">
         {hits.map((hit) => {
-          const isClicked = clickedHits.includes(hit.objectID);
+          const isClicked = clickedObjectID === hit.objectID;
 
           return (
             <li
@@ -62,15 +60,12 @@ export function InfiniteHits(props: InfiniteHitsProps<ProductHit>) {
               <div
                 className="ais-InfiniteHits-item__hit"
                 onClick={() => {
-                  const updatedClickedHits = [hit.objectID];
-
-                  setSelectedHit(hit);
-                  if (!clickedHits.includes(hit.objectID)) {
-                    setClickedHits(updatedClickedHits);
+                  if (clickedObjectID !== hit.objectID) {
+                    setClickedObjectID(hit.objectID);
                     // Save the updated clicked hits to localStorage
                     localStorage.setItem(
-                      'clickedHits',
-                      JSON.stringify(updatedClickedHits)
+                      CLICKED_HIT_KEY,
+                      JSON.stringify(hit.objectID)
                     );
                   }
                 }}
