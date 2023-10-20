@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
-import { Highlight, useInfiniteHits } from 'react-instantsearch';
+import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import { Highlight, useInfiniteHits } from "react-instantsearch";
 
-import type { InfiniteHitsProps } from 'react-instantsearch';
-import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache';
-import { CLICKED_HIT_KEY, SCROLL_POSITION_KEY } from '@/constants';
-import { ProductHit } from '@/app/types';
-import type { InfiniteHitsCache } from 'instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits';
+import type { InfiniteHitsProps } from "react-instantsearch";
+import { createInfiniteHitsSessionStorageCache } from "instantsearch.js/es/lib/infiniteHitsCache";
+import { CLICKED_HIT_KEY, SCROLL_POSITION_KEY } from "@/constants";
+import { ProductHit } from "@/app/types";
+import type { InfiniteHitsCache } from "instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits";
 
 const sessionStorageCache =
   createInfiniteHitsSessionStorageCache() as unknown as InfiniteHitsCache<ProductHit>;
@@ -54,7 +54,7 @@ export function InfiniteHits(props: InfiniteHitsProps<ProductHit>) {
           return (
             <li
               key={hit.objectID}
-              className={`ais-InfiniteHits-item ${isClicked ? 'clicked' : ''}`}
+              className={`ais-InfiniteHits-item ${isClicked ? "clicked" : ""}`}
               id={hit.objectID}
             >
               <div

@@ -1,7 +1,7 @@
-import 'instantsearch.css/themes/satellite.css';
-import { Inter } from 'next/font/google';
+import "instantsearch.css/themes/satellite.css";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title:

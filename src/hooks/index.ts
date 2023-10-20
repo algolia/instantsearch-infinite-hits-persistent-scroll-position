@@ -1,1 +1,1 @@
-export * from './useRestorePosition';
+export * from "./useRestorePosition";

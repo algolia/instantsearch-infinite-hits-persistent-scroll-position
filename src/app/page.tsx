@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { InfiniteHits } from '@/components/InfiniteHits';
+import { InfiniteHits } from "@/components/InfiniteHits";
 import {
   Configure,
   InstantSearch,
   RefinementList,
   SearchBox,
-} from 'react-instantsearch';
+} from "react-instantsearch";
 
-import './globals.css';
-import { Panel } from '@/components/Panel';
-import { INDEX_NAME, SCROLL_POSITION_KEY } from '@/constants';
-import { searchClientLite } from '@/searchClient';
-import { useRestorePosition } from '@/hooks';
+import "./globals.css";
+import { Panel } from "@/components/Panel";
+import { INDEX_NAME, SCROLL_POSITION_KEY } from "@/constants";
+import { searchClientLite } from "@/searchClient";
+import { useRestorePosition } from "@/hooks";
 
 export default function Home() {
   useRestorePosition(SCROLL_POSITION_KEY);
@@ -24,7 +24,7 @@ export default function Home() {
           <a href="/">react-instantsearch-app</a>
         </h1>
         <p className="header-subtitle">
-          using{' '}
+          using{" "}
           <a href="https://github.com/algolia/instantsearch/tree/master/packages/react-instantsearch">
             React InstantSearch with Infinite hits, auto show more,
           </a>
@@ -32,7 +32,11 @@ export default function Home() {
       </header>
 
       <div className="container">
-        <InstantSearch searchClient={searchClientLite} indexName={INDEX_NAME}>
+        <InstantSearch
+          searchClient={searchClientLite}
+          indexName={INDEX_NAME}
+          routing
+        >
           <Configure hitsPerPage={10} />
           <div className="search-panel">
             <div className="search-panel__filters">

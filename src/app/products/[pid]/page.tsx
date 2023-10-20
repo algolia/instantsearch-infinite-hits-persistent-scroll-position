@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ProductHit } from '@/app/types';
-import { INDEX_NAME } from '@/constants';
-import { searchClient } from '@/searchClient';
+import { ProductHit } from "@/app/types";
+import { INDEX_NAME } from "@/constants";
+import { searchClient } from "@/searchClient";
 
 type PageProps = {
   params: {
@@ -16,7 +16,7 @@ async function getData(objectID: string) {
   const res = await index.getObject<ProductHit>(objectID);
 
   if (!res) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
 
   return res;
@@ -49,9 +49,9 @@ export default async function Page({ params }: PageProps) {
                 stroke-width="1.5"
                 stroke="currentColor"
                 style={{
-                  width: '1.5rem',
-                  height: '1.5rem',
-                  marginRight: '0.5rem',
+                  width: "1.5rem",
+                  height: "1.5rem",
+                  marginRight: "0.5rem",
                 }}
               >
                 <path
@@ -74,7 +74,7 @@ export default async function Page({ params }: PageProps) {
                 <b>Brand</b>: {brand}
               </p>
               <p>
-                <b>Categories</b>: {categories.map((cat) => cat).join(', ')}
+                <b>Categories</b>: {categories.map((cat) => cat).join(", ")}
               </p>
             </div>
           </div>
