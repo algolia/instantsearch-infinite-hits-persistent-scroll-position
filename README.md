@@ -17,9 +17,9 @@ yarn start
 ## What's inside 🧐
 
 - [x] Infinite hits
-  - Create your own infinite hits component ( `src/components/InfiniteHits.tsx` ) | [Algolia Doc](https://www.algolia.com/doc/guides/building-search-ui/widgets/customize-an-existing-widget/react/#infinite-hits)
+  - Create your own infinite hits component ( `src/components/InfiniteHits.tsx` ) | [Algolia Doc](https://www.algolia.com/doc/api-reference/widgets/infinite-hits/react/)
 - [x] Auto show more
-  - Use IntersectionObserver on the infinite hits component to trigger the show more | [Algolia Doc](https://www.algolia.com/doc/api-reference/widgets/infinite-hits/react/#hook-api-showmore)
+  - Use IntersectionObserver on the infinite hits component to trigger the show more | [Algolia Doc](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/infinite-scroll/react/)
 - [x] Scroll persistence
   - Leveraging the sessionStorage to save the scroll position of the user
   - Leveraging the sessionStorage to save the clicked product
@@ -29,5 +29,6 @@ yarn start
 
 ## Built With 🏗
 
-- [Next.js](https://nextjs.org/)
+- [Algolia](https://www.algolia.com/)
 - [React InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/react/)
+- [Next.js](https://nextjs.org/)
