@@ -27,7 +27,8 @@ export default function Home() {
           <p className="header-subtitle">
             using{" "}
             <a href="https://github.com/algolia/instantsearch/tree/master/packages/react-instantsearch">
-              React InstantSearch with Infinite hits, auto show more,
+              React InstantSearch with Infinite hits, auto show more, and scroll
+              persistence
             </a>
           </p>
         </div>

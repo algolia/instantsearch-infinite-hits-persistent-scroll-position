@@ -36,36 +36,38 @@ export default async function Page({ params }: PageProps) {
       {data && (
         <section>
           <header className="header">
-            <button
-              className="back-button"
-              onClick={() => {
-                history.back();
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                style={{
-                  width: "1.5rem",
-                  height: "1.5rem",
-                  marginRight: "0.5rem",
+            <div className="header-content">
+              <button
+                className="back-button"
+                onClick={() => {
+                  history.back();
                 }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                />
-              </svg>
-              <span>Back</span>
-            </button>
-            <h1>{name}</h1>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  style={{
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    marginRight: "0.5rem",
+                  }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  />
+                </svg>
+                <span>Back</span>
+              </button>
+              <h1>{name}</h1>
+            </div>
           </header>
 
-          <div className="product-container">
+          <div className="container product-container">
             <img src={image} alt={`${name} image`} />
 
             <div>
