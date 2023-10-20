@@ -7,7 +7,7 @@ export function useRestorePosition(key: string) {
       setTimeout(() => {
         window.scrollTo(0, parseInt(scrollPosition));
         sessionStorage.removeItem(key);
-      }, 100);
+      }, 120);
     }
   }, []);
 }
