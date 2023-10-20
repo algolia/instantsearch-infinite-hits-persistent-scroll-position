@@ -20,15 +20,17 @@ export default function Home() {
   return (
     <div>
       <header className="header">
-        <h1 className="header-title">
-          <a href="/">react-instantsearch-app</a>
-        </h1>
-        <p className="header-subtitle">
-          using{" "}
-          <a href="https://github.com/algolia/instantsearch/tree/master/packages/react-instantsearch">
-            React InstantSearch with Infinite hits, auto show more,
-          </a>
-        </p>
+        <div className="header-content">
+          <h1 className="header-title">
+            <a href="/">react-instantsearch-app</a>
+          </h1>
+          <p className="header-subtitle">
+            using{" "}
+            <a href="https://github.com/algolia/instantsearch/tree/master/packages/react-instantsearch">
+              React InstantSearch with Infinite hits, auto show more,
+            </a>
+          </p>
+        </div>
       </header>
 
       <div className="container">
